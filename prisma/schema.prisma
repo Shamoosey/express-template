@@ -7,7 +7,36 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id                  String @id
-  username            String
+model Image {
+  id            String @id @default(uuid())
+  imageUrl      String
+  cloudinaryId  String
+  caption       String?
+  metaData      String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  imageCollection ImageCollection[]      
+}
+
+model ImageCollection {
+  id              String @id @default(uuid())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  collectionId    String
+  collection      Collection @relation(fields: collectionId, references: [id], onDelete: Cascade)  
+
+  imageId         String
+  image           Image @relation(fields: imageId, references: [id], onDelete: Cascade)
+}
+
+model Collection {
+  id              String @id @default(uuid())
+  name            String
+  description     String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  imageCollection ImageCollection[]
 }

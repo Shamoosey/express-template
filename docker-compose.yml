@@ -1,14 +1,14 @@
 services:
   postgres:
-    image: postgres:latest
-    container_name: express-template-pg
+    image: postgres:18
+    container_name: photo-site
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
       - "5434:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
 
 volumes:
   postgres_data:
